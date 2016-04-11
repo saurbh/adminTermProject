@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <h:outputStylesheet library="css" name="styles.css"/> 
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.2.min.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.9.1/jquery.tablesorter.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                var temp;
+                
+                $("td").hover(function(){
+                    temp=$(this).css('background-color');
+                    $(this).css('color','white');
+                    $(this).siblings().css('color','white');
+                    $(this).find("a").css('color','white');
+                    $(this).siblings().eq(0).children().css('color','white');
+                    $(this).siblings().css('background-color','#669cff');
+                    $(this).css('background-color','#669cff');
+                    $(this).siblings().eq(0).css('background-color','#669cff');
+                },
+                function(){
+                    $(this).css('color','black');							
+                    $(this).siblings().css('color','black');
+                    $(this).find("a").css('color','darkblue');
+                    $(this).css('background-color',temp);
+                    $(this).siblings().css('background-color',temp);
+                });
+                
+                $("tr").each(function(){
+                    switch(parseFloat($(this).children().eq(6).text()))
+                    {
+                        case 5.0 : $(this).css("background-color","#e9e9e9");	
+                            break;
+                        case 4.5 : $(this).css("background-color","#ECF0EC");
+                            break;
+                        case 4.0 : $(this).css("background-color","#D7E1EE");
+                            break;
+                        case 3.5 : $(this).css("background-color","lightblue");
+                            break;
+                        case 3.0 : $(this).css("background-color","#ffedcc");
+                            break;    
+                    }
+                });
+                    
+                $("tr:nth-child(even)").css("background-color","white");   
+                $(".Table").tablesorter();
+            })//The end of document 
+           
+        </script>
+    </h:head>
+    <h:body>
+        <h1> Enjoy Sarnia With Taste </h1>
+        
+        <h:dataTable 
+            styleClass="Table"
+            headerClass="Header"
+            rowClasses="Row"
+            columnClasses="column1,column2,column3,column4,column5,column6,column7"
+            value="#{postController.posts}" var="restaurant">
+            
+            <h:column headerClass="th">
+                <f:facet name="header">Name</f:facet>
+                    <h:form> 
+                        <h:commandLink action="#{postController.viewPost(restaurant)}">#{restaurant.name} </h:commandLink>    
+                    </h:form> 
+            </h:column>
+            <h:column headerClass="th">
+               <f:facet name="header">Menu</f:facet>
+               #{restaurant.menu}
+            </h:column>
+            <h:column headerClass="th">
+               <f:facet name="header">Price</f:facet>
+               #{restaurant.price}
+            </h:column>        
+            <h:column headerClass="th">
+               <f:facet name="header">Address</f:facet>
+               #{restaurant.address}
+            </h:column>        
+            <h:column headerClass="th">
+               <f:facet name="header">Phone</f:facet>
+               #{restaurant.phone}
+            </h:column>        
+            <h:column headerClass="th">
+               <f:facet name="header">Rating</f:facet>
+               <h:graphicImage value="#{restaurant.rating_image_url}"/>
+            </h:column>
+            <h:column headerClass="th">
+               <f:facet name="header">Rating_hidden</f:facet>
+               #{restaurant.rating}
+            </h:column>    
+            <h:column headerClass="th">
+                <h:form>
+                    <f:facet name="header">Edit</f:facet>
+                    <h:commandLink action="#{postController.viewPost(restaurant)}">Edit</h:commandLink>
+               </h:form>
+            </h:column>  
+        </h:dataTable>
+    </h:body>
+</html>
+
+
+<!-- NAME="";
+        MENU="";
+        PRICE="";
+        PHONE="";
+        ADDRESS="";
+        POSTAL_CODE="";
+        COUNTRY_CODE="";
+        LATITUDE=0.0;
+        LONGITUDE=0.0;
+        MOBILE_URL="";
+        RATING="";
+        RATING_IMAGE_URL="";
+        SNIPPET_TEXT=""; -->
